@@ -5,65 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tadeo Bouillon | Selector</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&display=swap');
-        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; }
-        .bento-card { border: 1px solid #1a1a1a; transition: all 0.4s ease; }
-        .bento-card:hover { border-color: #333; background: #050505; }
+        
+        body { background-color: #000; color: #fff; font-family: 'Inter', sans-serif; overflow-x: hidden; }
+
+        /* FONDO PERSONALIZADO: Aquí es donde pones tu foto */
+        .bg-custom {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                              url('TU_FOTO_AQUI.jpg'); /* <--- CAMBIA ESTO */
+            background-size: cover;
+            background-position: center;
+            z-index: -1;
+            transform: scale(1.1); /* Evita bordes blancos al animar */
+        }
+
+        /* EFECTO GLASSMORPHISM (APPLE) */
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.05); /* Transparencia base */
+            backdrop-filter: blur(20px) saturate(180%); /* Desenfoque y saturación pro */
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12); /* El "reflejo" del borde */
+            border-radius: 28px; 
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-card:hover { 
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.02);
+        }
+
+        /* Grano de película sutil */
         .grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; opacity: 0.04; z-index: 50;
+            pointer-events: none; opacity: 0.02; z-index: 50;
             background-image: url('https://grainy-gradients.vercel.app/noise.svg');
         }
+
+        /* Animación personalizada para los elementos */
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
     </style>
 </head>
-<body class="p-6 md:p-16">
+<body class="p-4 md:p-12">
+    <div class="bg-custom"></div>
     <div class="grain"></div>
     
-    <main class="max-w-3xl mx-auto space-y-12 relative z-10">
-        <section class="flex flex-col md:flex-row justify-between items-baseline border-b border-zinc-900 pb-8">
-            <div>
-                <h1 class="text-4xl font-bold tracking-tighter uppercase">Tadeo Bouillon</h1>
-                <p class="text-zinc-500 text-sm mt-1 uppercase tracking-widest">Minimalist / Techno / House</p>
-            </div>
-            <div class="text-zinc-600 text-[10px] uppercase tracking-[0.3em] mt-4 md:mt-0">
-                Santiago, Chile
-            </div>
-        </section>
-
-        <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bento-card p-2">
-                <div class="aspect-square bg-zinc-900 flex items-center justify-center text-zinc-700 text-[10px] uppercase tracking-widest">
-                    [ Foto Hero ]
+    <main class="max-w-4xl mx-auto space-y-6 relative z-10">
+        
+        <header class="glass-card p-8 animate__animated animate__fadeInDown">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-center md:text-left">
+                    <h1 class="text-5xl font-bold tracking-tighter uppercase italic leading-none">Tadeo Bouillon</h1>
+                    <p class="text-zinc-400 text-[10px] mt-3 uppercase tracking-[0.5em] font-light">Selector / Sound Explorer</p>
+                </div>
+                <div class="px-5 py-2 bg-white/10 rounded-full border border-white/10 text-[9px] uppercase tracking-widest">
+                    Santiago de Chile
                 </div>
             </div>
-            <div class="flex flex-col justify-center">
-                <p class="text-zinc-400 leading-relaxed text-sm">
-                    Explorando la profundidad del sonido a través de texturas minimalistas. Selector enfocado en la progresión rítmica y la atmósfera del dancefloor.
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <div class="glass-card p-3 animate__animated animate__fadeInLeft stagger-1 overflow-hidden group">
+                <div class="rounded-[20px] overflow-hidden aspect-square">
+                    <img src="TU_FOTO_AQUI.jpg" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+                </div>
+            </div>
+
+            <div class="md:col-span-2 glass-card p-10 flex flex-col justify-center animate__animated animate__fadeInRight stagger-1">
+                <h3 class="text-zinc-500 text-[10px] uppercase tracking-[0.4em] mb-4">Statement</h3>
+                <p class="text-xl text-zinc-200 font-light leading-snug italic">
+                    "La música no se escucha, se habita. Enfoque minimalista para momentos de máxima profundidad rítmica."
                 </p>
             </div>
-        </section>
 
-        <section class="space-y-6">
-            <h2 class="text-zinc-600 text-[10px] uppercase tracking-[0.4em]">Curated Sets</h2>
-            
-            <div class="bento-card p-4 space-y-4">
-                <div class="flex justify-between text-[10px] uppercase tracking-widest text-zinc-500">
-                    <span>Latest Recording</span>
-                    <span>2024</span>
+            <div class="md:col-span-3 glass-card p-6 animate__animated animate__fadeInUp stagger-2">
+                <div class="flex items-center justify-between mb-6 px-2">
+                    <h2 class="text-zinc-500 text-[10px] uppercase tracking-[0.4em]">Recent Mixes</h2>
+                    <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
                 </div>
-                <div class="w-full bg-zinc-900 h-24 flex items-center justify-center text-zinc-800 text-[10px] uppercase">
-                    Pega aquí tu link de SoundCloud y yo te doy el embed
+                <div class="rounded-2xl overflow-hidden shadow-2xl">
+                    <div class="bg-black/40 h-[166px] flex items-center justify-center text-zinc-600 text-xs uppercase tracking-tighter">
+                         Pega tu embed de SoundCloud aquí
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <footer class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-12">
-            <a href="#" class="bento-card p-4 text-center text-[10px] uppercase tracking-widest hover:text-white text-zinc-500">Instagram</a>
-            <a href="#" class="bento-card p-4 text-center text-[10px] uppercase tracking-widest hover:text-white text-zinc-500">SoundCloud</a>
-            <a href="#" class="bento-card p-4 text-center text-[10px] uppercase tracking-widest hover:text-white text-zinc-500">WhatsApp</a>
-            <a href="mailto:hola@tadeobouillon.cl" class="bento-card p-4 text-center text-[10px] uppercase tracking-widest hover:text-white text-zinc-500">Email</a>
-        </footer>
+            <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4 animate__animated animate__fadeInUp stagger-3">
+                <a href="#" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">Instagram</a>
+                <a href="#" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">SoundCloud</a>
+                <a href="#" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">WhatsApp</a>
+                <a href="mailto:hola@tadeobouillon.cl" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">Email</a>
+            </div>
+        </div>
     </main>
 </body>
 </html>
