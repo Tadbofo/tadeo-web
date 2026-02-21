@@ -7,18 +7,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
-    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --font-main: 'Michroma', sans-serif;
+            --font-bio: 'Funnel Sans', sans-serif;
+        }
+
         body { 
             background-color: #000; 
             color: #fff; 
-            font-family: 'Michroma', sans-serif; 
+            font-family: var(--font-main); 
             overflow-x: hidden;
             letter-spacing: 0.02em;
         }
 
-        /* FONDO PERSONALIZADO CON TUS IMÁGENES DE IMGUR */
         .bg-custom {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -27,40 +31,38 @@
             background-size: cover;
             background-position: center;
             z-index: -1;
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
 
-        /* EFECTO GLASSMORPHISM (APPLE STYLE) */
         .glass-card { 
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 28px; 
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px) saturate(160%);
+            -webkit-backdrop-filter: blur(25px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px; 
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .glass-card:hover { 
-            background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
         }
 
-        /* Grano de película */
+        .bio-text {
+            font-family: var(--font-bio);
+            text-transform: lowercase;
+            font-weight: 300;
+        }
+
         .grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; opacity: 0.02; z-index: 50;
             background-image: url('https://grainy-gradients.vercel.app/noise.svg');
         }
 
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.2s; }
-        .stagger-3 { animation-delay: 0.3s; }
-
-        /* Ajuste para que Michroma no se vea gigante en móvil */
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem !important; }
+            h1 { font-size: 2rem !important; }
         }
     </style>
 </head>
@@ -73,45 +75,45 @@
         <header class="glass-card p-8 animate__animated animate__fadeInDown">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="text-center md:text-left">
-                    <h1 class="text-5xl font-bold tracking-tighter uppercase italic leading-none">Tadeo Bouillon</h1>
-                    <p class="text-zinc-400 text-[10px] mt-4 uppercase tracking-[0.5em]">TECH HOUSE DJ</p>
+                    <h1 class="text-4xl font-bold tracking-tighter">Tadeo Bouillon</h1>
+                    <p class="text-zinc-500 text-[9px] mt-4 uppercase tracking-[0.6em]">Tech House DJ / Selector</p>
                 </div>
-                <div class="px-5 py-2 bg-white/10 rounded-full border border-white/10 text-[9px] uppercase tracking-[0.2em]">
-                    Santiago de Chile
+                <div class="px-5 py-2 bg-white/5 rounded-full border border-white/10 text-[9px] uppercase tracking-widest text-zinc-400">
+                    Santiago, CL
                 </div>
             </div>
         </header>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <div class="glass-card p-3 animate__animated animate__fadeInLeft stagger-1 overflow-hidden group">
-                <div class="rounded-[20px] overflow-hidden aspect-square">
-                    <img src="https://i.imgur.com/r8wGnRn.png" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000">
+            <div class="glass-card p-3 animate__animated animate__fadeInLeft overflow-hidden group">
+                <div class="rounded-[24px] overflow-hidden aspect-square">
+                    <img src="https://i.imgur.com/r8wGnRn.png" class="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0">
                 </div>
             </div>
 
-            <div class="md:col-span-2 glass-card p-10 flex flex-col justify-center animate__animated animate__fadeInRight stagger-1">
-                <h3 class="text-zinc-500 text-[10px] uppercase tracking-[0.4em] mb-6">Statement</h3>
-                <p class="text-xl md:text-2xl text-zinc-200 font-light leading-relaxed italic">
-                    "La música no se escucha, se habita. Enfoque minimalista para momentos de máxima profundidad rítmica."
+            <div class="md:col-span-2 glass-card p-10 flex flex-col justify-center animate__animated animate__fadeInRight">
+                <h3 class="text-zinc-600 text-[9px] uppercase tracking-[0.5em] mb-6">Bio</h3>
+                <p class="bio-text text-xl md:text-2xl text-zinc-200 leading-relaxed">
+                    Inmerso en la electrónica desde pequeño, hoy mi enfoque es el tech house y club house, priorizando una selección musical detallada sobre la pista para asegurar un set bailable y de alta energía.
                 </p>
             </div>
 
-            <div class="md:col-span-3 glass-card p-6 animate__animated animate__fadeInUp stagger-2">
+            <div class="md:col-span-3 glass-card p-6 animate__animated animate__fadeInUp">
                 <div class="flex items-center justify-between mb-6 px-2">
-                    <h2 class="text-zinc-500 text-[10px] uppercase tracking-[0.4em]">Mezclas Recientes</h2>
-                    <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                    <h2 class="text-zinc-600 text-[9px] uppercase tracking-[0.5em]">Latest Set</h2>
+                    <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
                 </div>
-                <div class="rounded-2xl overflow-hidden shadow-2xl bg-black/20">
+                <div class="rounded-2xl overflow-hidden shadow-2xl">
                     <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2097696057&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
                 </div>
             </div>
 
-            <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4 animate__animated animate__fadeInUp stagger-3">
-                <a href="https://www.instagram.com/tab.f/" target="_blank" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">Instagram</a>
-                <a href="https://soundcloud.com/tabfo" target="_blank" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">SoundCloud</a>
-                <a href="https://wa.me/56932556117?text=Hola%20Tadeo!" target="_blank" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">WhatsApp</a>
-                <a href="mailto:tadeobouillon.contacto@gmail.com" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">Email</a>
+            <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4 animate__animated animate__fadeInUp">
+                <a href="https://www.instagram.com/tab.f/" target="_blank" class="glass-card py-6 text-center text-[9px] uppercase tracking-[0.3em] hover:bg-white hover:text-black">Instagram</a>
+                <a href="https://soundcloud.com/tabfo" target="_blank" class="glass-card py-6 text-center text-[9px] uppercase tracking-[0.3em] hover:bg-white hover:text-black">SoundCloud</a>
+                <a href="https://wa.me/56932556117?text=Hola%20Tadeo!" target="_blank" class="glass-card py-6 text-center text-[9px] uppercase tracking-[0.3em] hover:bg-white hover:text-black">WhatsApp</a>
+                <a href="mailto:tadeobouillon.contacto@gmail.com" class="glass-card py-6 text-center text-[9px] uppercase tracking-[0.3em] hover:bg-white hover:text-black">Email</a>
             </div>
         </div>
     </main>
