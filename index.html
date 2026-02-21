@@ -6,29 +6,36 @@
     <title>Tadeo Bouillon | Selector</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    <style>
-        @import url('<link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">');
-        
-        body { background-color: #000; color: #fff; font-family: 'Michroma', sans-serif; overflow-x: hidden; }
+    
+    <link href="https://fonts.googleapis.com/css2?family=Michroma&display=swap" rel="stylesheet">
 
-        /* FONDO PERSONALIZADO: Aquí es donde pones tu foto */
+    <style>
+        body { 
+            background-color: #000; 
+            color: #fff; 
+            font-family: 'Michroma', sans-serif; 
+            overflow-x: hidden;
+            letter-spacing: 0.02em;
+        }
+
+        /* FONDO PERSONALIZADO CON TUS IMÁGENES DE IMGUR */
         .bg-custom {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
-                              url('https://i.imgur.com/5gSMqPs.jpeg'); /* <--- CAMBIA ESTO */
+                              url('https://i.imgur.com/5gSMqPs.jpeg');
             background-size: cover;
             background-position: center;
             z-index: -1;
-            transform: scale(1.1); /* Evita bordes blancos al animar */
+            transform: scale(1.1);
         }
 
-        /* EFECTO GLASSMORPHISM (APPLE) */
+        /* EFECTO GLASSMORPHISM (APPLE STYLE) */
         .glass-card { 
-            background: rgba(255, 255, 255, 0.05); /* Transparencia base */
-            backdrop-filter: blur(20px) saturate(180%); /* Desenfoque y saturación pro */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px) saturate(180%);
             -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.12); /* El "reflejo" del borde */
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 28px; 
             box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
@@ -37,20 +44,24 @@
         .glass-card:hover { 
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.3);
-            transform: scale(1.02);
+            transform: scale(1.01);
         }
 
-        /* Grano de película sutil */
+        /* Grano de película */
         .grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; opacity: 0.02; z-index: 50;
             background-image: url('https://grainy-gradients.vercel.app/noise.svg');
         }
 
-        /* Animación personalizada para los elementos */
         .stagger-1 { animation-delay: 0.1s; }
         .stagger-2 { animation-delay: 0.2s; }
         .stagger-3 { animation-delay: 0.3s; }
+
+        /* Ajuste para que Michroma no se vea gigante en móvil */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem !important; }
+        }
     </style>
 </head>
 <body class="p-4 md:p-12">
@@ -63,9 +74,9 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="text-center md:text-left">
                     <h1 class="text-5xl font-bold tracking-tighter uppercase italic leading-none">Tadeo Bouillon</h1>
-                    <p class="text-zinc-400 text-[10px] mt-3 uppercase tracking-[0.5em] font-light">TECH HOUSE DJ</p>
+                    <p class="text-zinc-400 text-[10px] mt-4 uppercase tracking-[0.5em]">TECH HOUSE DJ</p>
                 </div>
-                <div class="px-5 py-2 bg-white/10 rounded-full border border-white/10 text-[9px] uppercase tracking-widest">
+                <div class="px-5 py-2 bg-white/10 rounded-full border border-white/10 text-[9px] uppercase tracking-[0.2em]">
                     Santiago de Chile
                 </div>
             </div>
@@ -80,8 +91,8 @@
             </div>
 
             <div class="md:col-span-2 glass-card p-10 flex flex-col justify-center animate__animated animate__fadeInRight stagger-1">
-                <h3 class="text-zinc-500 text-[10px] uppercase tracking-[0.4em] mb-4">Statement</h3>
-                <p class="text-xl text-zinc-200 font-light leading-snug italic">
+                <h3 class="text-zinc-500 text-[10px] uppercase tracking-[0.4em] mb-6">Statement</h3>
+                <p class="text-xl md:text-2xl text-zinc-200 font-light leading-relaxed italic">
                     "La música no se escucha, se habita. Enfoque minimalista para momentos de máxima profundidad rítmica."
                 </p>
             </div>
@@ -91,18 +102,16 @@
                     <h2 class="text-zinc-500 text-[10px] uppercase tracking-[0.4em]">Mezclas Recientes</h2>
                     <span class="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
                 </div>
-                <div class="rounded-2xl overflow-hidden shadow-2xl">
-                    <div class="bg-black/40 h-[166px] flex items-center justify-center text-zinc-600 text-xs uppercase tracking-tighter">
-                         <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/soundcloud%253Atracks%253A2097696057&color=%23ff9051&auto_play=true&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/tabfo" title="Tadeo Bouillon" target="_blank" style="color: #cccccc; text-decoration: none;">Tadeo Bouillon</a> · <a href="https://soundcloud.com/tabfo/mini-set-techno-minimal" title="mini set techno minimal" target="_blank" style="color: #cccccc; text-decoration: none;">mini set techno minimal</a></div>
-                    </div>
+                <div class="rounded-2xl overflow-hidden shadow-2xl bg-black/20">
+                    <iframe width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2097696057&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false&visual=true"></iframe>
                 </div>
             </div>
 
             <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4 animate__animated animate__fadeInUp stagger-3">
-                <a href="https://www.instagram.com/tab.f/" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">Instagram</a>
-                <a href="https://soundcloud.com/tabfo" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">SoundCloud</a>
-                <a href="https://wa.me/56932556117?text=Hola%20Tadeo!" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">WhatsApp</a>
-                <a href="mailto:tadeobouillon.contacto@gmail.com" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white/20">Email</a>
+                <a href="https://www.instagram.com/tab.f/" target="_blank" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">Instagram</a>
+                <a href="https://soundcloud.com/tabfo" target="_blank" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">SoundCloud</a>
+                <a href="https://wa.me/56932556117?text=Hola%20Tadeo!" target="_blank" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">WhatsApp</a>
+                <a href="mailto:tadeobouillon.contacto@gmail.com" class="glass-card p-6 text-center text-[10px] uppercase tracking-widest hover:bg-white hover:text-black">Email</a>
             </div>
         </div>
     </main>
