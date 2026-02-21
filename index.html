@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tadeo Bouillon | DJ Tech House</title>
+    <title>Tadeo Bouillon | DJ</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     
@@ -53,6 +53,13 @@
             font-weight: 300;
         }
 
+        .label-style {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+            font-weight: bold;
+            letter-spacing: 0.1em;
+        }
+
         .grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; opacity: 0.02; z-index: 50;
@@ -86,15 +93,15 @@
             </div>
 
             <div class="md:col-span-2 glass-card p-10 flex flex-col justify-center animate__animated animate__fadeInRight">
-                <h3 class="text-zinc-600 text-[10px] tracking-[0.5em] mb-6 font-bold uppercase">Biografía</h3>
+                <h3 class="label-style mb-6">Biografía</h3>
                 <p class="bio-text text-xl md:text-2xl text-zinc-200 leading-relaxed">
-                    Inmerso en la electrónica desde pequeño. Hoy mi enfoque es el tech house y club house, priorizando una selección musical meticulosa sobre la pista para asegurar un set bailable y de alta energía.
+                    Inmerso en la electrónica desde temprana edad. Hoy mi enfoque transita por el Tech House y Club House, definiendo un estilo versátil que prioriza la lectura de pista y una selección musical detallada para mantener la energía en cada set.
                 </p>
             </div>
 
             <div class="md:col-span-3 glass-card p-6 animate__animated animate__fadeInUp">
                 <div class="flex items-center justify-between mb-6 px-2">
-                    <h2 class="text-zinc-600 text-[10px] tracking-[0.5em] uppercase">Mezcla reciente</h2>
+                    <h2 class="label-style">Mezcla reciente</h2>
                     <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
                 </div>
                 <div class="rounded-2xl overflow-hidden shadow-2xl bg-black/20">
@@ -102,11 +109,14 @@
                 </div>
             </div>
 
-            <div class="md:col-span-3 grid grid-cols-2 md:grid-cols-4 gap-4 animate__animated animate__fadeInUp">
-                <a href="https://www.instagram.com/tab.f/" target="_blank" class="glass-card py-6 text-center text-[11px] hover:bg-white hover:text-black">Instagram</a>
-                <a href="https://soundcloud.com/tabfo" target="_blank" class="glass-card py-6 text-center text-[11px] hover:bg-white hover:text-black">Soundcloud</a>
-                <a href="https://wa.me/56932556117?text=Hola%20Tadeo!" target="_blank" class="glass-card py-6 text-center text-[11px] hover:bg-white hover:text-black">Whatsapp</a>
-                <a href="mailto:tadeobouillon.contacto@gmail.com" class="glass-card py-6 text-center text-[11px] hover:bg-white hover:text-black">Email</a>
+            <div class="md:col-span-3 glass-card p-8 animate__animated animate__fadeInUp">
+                <h3 class="label-style mb-8 text-center">Contáctame</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="https://www.instagram.com/tab.f/" target="_blank" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all">Instagram</a>
+                    <a href="https://soundcloud.com/tabfo" target="_blank" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all">Soundcloud</a>
+                    <a href="https://wa.me/56932556117" target="_blank" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all font-bold">WhatsApp</a>
+                    <a href="mailto:tadeobouillon.contacto@gmail.com" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all">Email</a>
+                </div>
             </div>
         </div>
     </main>
