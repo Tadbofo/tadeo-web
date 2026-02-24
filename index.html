@@ -1,124 +1,635 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tadeo Bouillon | DJ</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Funnel+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tadeo Bouillon — DJ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    <style>
-        :root {
-            --font-main: 'Michroma', sans-serif;
-            --font-bio: 'Funnel Sans', sans-serif;
-        }
+    :root {
+      --orange: #fb7e14;
+      --white: #f0ede8;
+      --gray: #888;
+      --black: #000;
+    }
 
-        body { 
-            background-color: #000; 
-            color: #fff; 
-            font-family: var(--font-main); 
-            overflow-x: hidden;
-            letter-spacing: 0.02em;
-        }
+    html { scroll-behavior: smooth; }
 
-        .bg-custom {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, rgba(0,0,0,0.9) 100%),
-                url('https://i.imgur.com/s3XAC5d.jpeg');
-            background-size: cover;
-            background-position: center;
-            z-index: -1;
-        }
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+    }
 
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(25px) saturate(160%);
-            -webkit-backdrop-filter: blur(25px) saturate(160%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px; 
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+    /* CUSTOM CURSOR */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--orange);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, opacity 0.3s;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 24px; height: 24px;
+      border: 1px solid rgba(251,126,20,0.4);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.35s ease, width 0.3s, height 0.3s, border-color 0.3s;
+      transform: translate(-50%, -50%);
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring {
+      width: 56px; height: 56px;
+      border-color: var(--orange);
+    }
 
-        .glass-card:hover { 
-            background: rgba(255, 255, 255, 0.06);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
+    /* NOISE OVERLAY ANIMADO */
+   /* NOISE OVERLAY ANIMADO - FIX GLITCH DERECHA */
+    body::before {
+      content: '';
+      position: fixed;
+     /* El truco es que sea más grande que el viewport y centrarlo */
+     top: -50%;
+     left: -50%;
+     right: -50%;
+     bottom: -50%;
+     width: 200%;
+     height: 200%;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.03;
+    pointer-events: none;
+    z-index: 100;
+    /* Animación más sutil en movimiento para evitar el desfase visual */
+      animation: noiseAnimation 0.2s infinite steps(5);
+         will-change: transform;
+    }
 
-        .bio-text {
-            font-family: var(--font-bio);
-            font-weight: 300;
-        }
+    @keyframes noiseAnimation {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(10px, 5px); }
+      40% { transform: translate(-5px, 10px); }
+      60% { transform: translate(-15px, -5px); }
+      80% { transform: translate(5px, -10px); }
+      100% { transform: translate(0, 0); }
+    }
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-        .label-style {
-            font-size: 11px;
-            color: rgba(255,255,255,0.5);
-            font-weight: bold;
-            letter-spacing: 0.1em;
-        }
+    /* HERO ACTUALIZADO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px 5vw 40px; /* Reducido padding para dar más aire arriba */
+      position: relative;
+      overflow: hidden;
+    }
+    #hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://i.imgur.com/r8wGnRn.png');
+      background-size: cover;
+      background-position: center 20%; /* Ajustado para centrar mejor el rostro */
+      opacity: 1; /* Máxima visibilidad */
+      transform: scale(1); /* Sin escala inicial para evitar lag */
+    }
+    #hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      /* Degradado solo en la base para asegurar legibilidad del texto */
+      background: linear-gradient(to top, #000 10%, rgba(0,0,0,0) 60%);
+      pointer-events: none;
+    }
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5); /* Sombra para legibilidad */
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--orange);
+    }
+    .hero-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 14vw, 200px);
+      line-height: 0.92;
+      letter-spacing: -0.01em;
+      position: relative;
+      z-index: 2;
+      color: var(--white);
+      text-shadow: 0 5px 20px rgba(0,0,0,0.4);
+    }
+    .hero-name span { display: block; }
+    .hero-name .accent {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(240,237,232,0.5);
+      transition: color 0.35s ease, -webkit-text-stroke 0.35s ease;
+      cursor: default;
+    }
+    .hero-name .accent:hover {
+      color: var(--orange);
+      -webkit-text-stroke: 1px transparent;
+    }
+    .hero-sub {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-sub p {
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      color: var(--white); /* Cambiado de gris a blanco para resaltar sobre la foto */
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
 
-        .grain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; opacity: 0.02; z-index: 50;
-            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
-        }
-    </style>
+    /* DIVIDER */
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent);
+    }
+
+    /* SECTION BASE */
+    section { padding: 96px 5vw; }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      color: var(--orange);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 40px;
+    }
+    .section-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px; height: 1px;
+      background: var(--orange);
+    }
+
+    /* BIO */
+    #bio-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media (min-width: 768px) {
+      #bio-section { grid-template-columns: 1fr 2fr; align-items: start; }
+    }
+
+    /* COUNTERS */
+    .counters { display: flex; flex-direction: column; gap: 36px; margin-top: 8px; }
+    .counter-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 64px;
+      color: var(--orange);
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+    .counter-label {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+    .bio-text {
+      font-size: clamp(20px, 2.5vw, 28px);
+      line-height: 1.6;
+      color: rgba(240,237,232,0.85);
+      font-weight: 300;
+    }
+    .bio-text strong { color: var(--white); font-weight: 500; }
+    .genre-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+    .genre-tag {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 8px 18px;
+      border-radius: 100px;
+      color: var(--gray);
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .genre-tag:hover { border-color: var(--orange); color: var(--orange); }
+
+    /* VIDEO */
+    #video-section .vimeo-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border-radius: 6px;
+      background: #080808;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    #video-section .vimeo-wrapper iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: 0;
+    }
+    .vimeo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: rgba(255,255,255,0.15);
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .vimeo-placeholder svg { width: 48px; height: 48px; opacity: 0.2; }
+
+    /* MIX */
+    #mix .mix-wrapper {
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.02);
+    }
+    #mix .mix-header {
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    #mix .mix-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 0.05em;
+    }
+    .live-dot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--gray);
+      text-transform: uppercase;
+    }
+    .live-dot::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: #e03030;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+    #mix iframe { display: block; width: 100%; }
+
+    /* CTA */
+    #cta-section { padding: 80px 5vw; }
+    .cta-status {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .cta-status::before {
+      content: '';
+      width: 7px; height: 7px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    .cta-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 6vw, 80px);
+      line-height: 1;
+      letter-spacing: 0.01em;
+      color: var(--white);
+      max-width: 700px;
+      margin-bottom: 16px;
+    }
+    .cta-sub {
+      font-size: 14px;
+      color: var(--gray);
+      letter-spacing: 0.06em;
+      margin-bottom: 44px;
+      font-weight: 300;
+    }
+    .cta-actions { display: flex; flex-direction: column; gap: 14px; }
+    .cta-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 28px;
+      border: 1px solid var(--orange);
+      border-radius: 4px;
+      color: var(--orange);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: background 0.3s, color 0.3s;
+      width: fit-content;
+    }
+    .cta-wa:hover { background: var(--orange); color: var(--black); }
+    .cta-wa svg { width: 16px; height: 16px; flex-shrink: 0; }
+    .cta-email {
+      font-size: 12px;
+      color: rgba(136,136,136,0.6);
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: color 0.3s;
+      padding-left: 2px;
+    }
+    .cta-email:hover { color: var(--white); }
+
+    /* REDES */
+    #contacto .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 480px) {
+      #contacto .contact-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .contact-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 28px 16px;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: border-color 0.3s, color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .contact-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--orange);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .contact-btn:hover { border-color: var(--orange); color: var(--black); }
+    .contact-btn:hover::before { opacity: 1; }
+    .contact-btn span, .contact-btn svg { position: relative; z-index: 1; }
+    .contact-btn svg { width: 20px; height: 20px; }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 5vw;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: rgba(136,136,136,0.5);
+      text-transform: uppercase;
+    }
+    footer .footer-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      color: rgba(240,237,232,0.2);
+    }
+  </style>
 </head>
-<body class="p-4 md:p-12">
-    <div class="bg-custom"></div>
-    <div class="grain"></div>
-    
-    <main class="max-w-4xl mx-auto space-y-6 relative z-10">
-        
-        <header class="glass-card p-8 animate__animated animate__fadeInDown">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-center md:text-left">
-                    <h1 class="text-4xl font-bold tracking-tighter">Tadeo Bouillon</h1>
-                </div>
-                <div class="px-5 py-2 bg-white/5 rounded-full border border-white/10 text-[10px] tracking-wide text-zinc-400">
-                    Santiago de Chile
-                </div>
-            </div>
-        </header>
+<body>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            
-            <div class="glass-card p-3 animate__animated animate__fadeInLeft overflow-hidden group">
-                <div class="rounded-[24px] overflow-hidden aspect-square">
-                    <img src="https://i.imgur.com/r8wGnRn.png" class="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:grayscale-0">
-                </div>
-            </div>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
-            <div class="md:col-span-2 glass-card p-10 flex flex-col justify-center animate__animated animate__fadeInRight">
-                <h3 class="label-style mb-6">Biografía</h3>
-                <p class="bio-text text-xl md:text-2xl text-zinc-200 leading-relaxed">
-                    Inmerso en la electrónica desde temprana edad. Hoy mi enfoque transita por el Tech House y Club House, definiendo un estilo versátil que prioriza la lectura de pista y una selección musical detallada para mantener la energía en cada set.
-                </p>
-            </div>
+  <section id="hero">
+    <div id="hero-bg"></div>
+    <div class="hero-tag reveal">DJ · Santiago de Chile</div>
+    <h1 class="hero-name">
+      <span class="reveal" style="transition-delay:0.1s">Tadeo</span>
+      <span class="reveal accent" style="transition-delay:0.2s">Bouillon</span>
+    </h1>
+    <div class="hero-sub reveal" style="transition-delay:0.35s">
+      <p>Tech House · Club House</p>
+    </div>
+  </section>
 
-            <div class="md:col-span-3 glass-card p-6 animate__animated animate__fadeInUp">
-                <div class="flex items-center justify-between mb-6 px-2">
-                    <h2 class="label-style">Mezcla reciente</h2>
-                    <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-pulse"></span>
-                </div>
-                <div class="rounded-2xl overflow-hidden shadow-2xl bg-black/20">
-                    <iframe width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2097696057&color=%23000000&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false"></iframe>
-                </div>
-            </div>
+  <div class="divider"></div>
 
-            <div class="md:col-span-3 glass-card p-8 animate__animated animate__fadeInUp">
-                <h3 class="label-style mb-8 text-center">Contáctame</h3>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="https://www.instagram.com/tab.f/" target="_blank" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all">Instagram</a>
-                    <a href="https://soundcloud.com/tabfo" target="_blank" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all">Soundcloud</a>
-                    <a href="https://wa.me/56932556117" target="_blank" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all font-bold">WhatsApp</a>
-                    <a href="mailto:tadeobouillon.contacto@gmail.com" class="py-4 text-center text-[11px] border border-white/5 rounded-2xl hover:bg-white hover:text-black transition-all">Email</a>
-                </div>
-            </div>
+  <section>
+    <div id="bio-section">
+      <div class="reveal">
+        <div class="section-label">Sobre mí</div>
+        <div class="counters">
+          <div class="counter-item">
+            <div class="counter-number"><span class="counter-val" data-target="45" data-suffix="+">0+</span></div>
+            <div class="counter-label">Eventos</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-number"><span class="counter-val" data-target="2" data-suffix="">0</span></div>
+            <div class="counter-label">Años de experiencia</div>
+          </div>
         </div>
-    </main>
+      </div>
+      <div class="reveal" style="transition-delay:0.15s">
+        <p class="bio-text">
+          Inmerso en la electrónica desde temprana edad. Mi enfoque transita por el <strong>Tech House</strong> y el <strong>Club House</strong>, definiendo un estilo versátil que prioriza la lectura de pista y una selección musical detallada para mantener la energía en cada set.
+        </p>
+        <div class="genre-tags">
+          <div class="genre-tag">Tech House</div>
+          <div class="genre-tag">Club House</div>
+          <div class="genre-tag">Electronic</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="video-section">
+    <div class="section-label reveal">En acción</div>
+    <div class="vimeo-wrapper reveal" style="transition-delay:0.1s">
+      <div class="vimeo-placeholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <circle cx="12" cy="12" r="10"/>
+          <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/>
+        </svg>
+        <span>Tu video de Vimeo va aquí</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="mix">
+    <div class="section-label reveal">Música</div>
+    <div class="mix-wrapper reveal" style="transition-delay:0.1s">
+      <div class="mix-header">
+        <div class="mix-title">Última Mezcla</div>
+        <div class="live-dot">Escuchar</div>
+      </div>
+      <iframe
+        width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay"
+        src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/2097696057&color=%23fb7e14&auto_play=false&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false">
+      </iframe>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="cta-section">
+    <div class="cta-status reveal">Disponible</div>
+    <h2 class="cta-heading reveal" style="transition-delay:0.1s">¿Tienes un evento?<br>Hablemos.</h2>
+    <p class="cta-sub reveal" style="transition-delay:0.2s">Clubes, fiestas privadas y eventos. Santiago y todo Chile.</p>
+    <div class="cta-actions reveal" style="transition-delay:0.3s">
+      <a href="https://wa.me/56932556117" target="_blank" class="cta-wa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+        WhatsApp →
+      </a>
+      <a href="mailto:tadeobouillon.contacto@gmail.com" class="cta-email">
+        tadeobouillon.contacto@gmail.com
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section id="contacto">
+    <div class="section-label reveal">Redes</div>
+    <div class="contact-grid reveal" style="transition-delay:0.1s">
+      <a href="https://www.instagram.com/tab.f/" target="_blank" class="contact-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+        </svg>
+        <span>Instagram</span>
+      </a>
+      <a href="https://soundcloud.com/tabfo" target="_blank" class="contact-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" stroke="none">
+          <path d="M2 13.5C2 15.43 3.57 17 5.5 17c.36 0 .71-.06 1.04-.16A4.5 4.5 0 0 0 15 13.5c0-.16-.01-.32-.03-.48A3 3 0 0 0 17 7h-.27A5 5 0 0 0 7.1 9.1 3.5 3.5 0 0 0 2 13.5z"/>
+        </svg>
+        <span>Soundcloud</span>
+      </a>
+      <a href="https://wa.me/56932556117" target="_blank" class="contact-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        </svg>
+        <span>WhatsApp</span>
+      </a>
+      <a href="mailto:tadeobouillon.contacto@gmail.com" class="contact-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+        </svg>
+        <span>Email</span>
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-name">Tadeo Bouillon</div>
+    <div>Santiago de Chile · 2025</div>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+    (function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    })();
+
+    // Animación de fondo eliminada para optimizar FPS
+
+    // Scroll reveal
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+    setTimeout(() => {
+      document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
+    }, 100);
+
+    // Counters
+    function animateCounter(el) {
+      const target = parseInt(el.dataset.target);
+      const suffix = el.dataset.suffix || '';
+      const duration = 1800;
+      const start = performance.now();
+      function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.counter-val').forEach(animateCounter);
+          counterObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.counters').forEach(el => counterObs.observe(el));
+  </script>
 </body>
 </html>
